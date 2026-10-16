@@ -29,6 +29,8 @@ The Portaldot V3 testnet guide currently documents the following EVM settings:
 | Native token decimals | `14` |
 | Node console | [node-console.feso-apps.xyz](https://node-console.feso-apps.xyz/) |
 
+> **Current blocker — checked October 16, 2026:** the documented EVM RPC hostname currently returns DNS `NXDOMAIN`; the live check from GitHub Actions fails with `ENOTFOUND` before it reaches JSON-RPC. The documented Substrate testnet node hostname also returns `NXDOMAIN`. See the [failed connectivity check](https://github.com/Leno3z4/Puyomu/actions/runs/38929862177) and [DNS result for the EVM hostname](https://dns.google/resolve?name=testnetv3-eth-rpc.feso-apps.xyz&type=A). **Do not run the deployment workflow or add a private-key secret until Portaldot provides a working endpoint.** The source guide may be accurate historically, but it is not currently a reachable deployment path from our check.
+
 Reference: [Portaldot V3 testnet guide](https://github.com/ItsCogumellum/portaldot-v3-testnet-guide), sections 3.1–3.4.
 
 **Important address/faucet detail:** the guide warns that a Portaldot EVM-format (H160) address is not necessarily the same address generated on Ethereum/BSC from the same key. Use the Node Console's **Developer → Runtime calls → reviveApi → accountId** to query the mapped Portaldot account, then send testnet funds to that mapped account as described in the guide. Confirm the current flow in the console before sending funds.
