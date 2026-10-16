@@ -54,6 +54,18 @@ The deploy script is intentionally guarded: when using the `portaldotV3` network
 
 If deployment fails, stop and inspect the actual error and chain status; do not silently switch to another network.
 
+### Deploy from GitHub Actions (no key in chat)
+
+1. Create a **dedicated testnet-only** EVM wallet. Do not use a wallet holding mainnet funds.
+2. Fund it with testnet gas following the Portaldot guide's address-mapping instructions above.
+3. In GitHub, open **Settings → Secrets and variables → Actions → New repository secret**.
+4. Name the secret `PORTALDOT_TESTNET_PRIVATE_KEY` and paste the testnet wallet's private key into GitHub's secret field. Never paste it into an issue, commit, source file or this chat.
+5. Open **Actions → Deploy Puyomu to Portaldot V3 Testnet → Run workflow**.
+
+That manual workflow compiles the contracts, runs tests, checks the chain ID, deploys the probe and registry, verifies the probe's write/read, then commits the public contract addresses and transaction hashes into `deployments/portaldotV3.json`. The secret is passed only as an Actions environment variable; it is not written to the repository.
+
+Before exposing any secret to the workflow, review the workflow file and use only a wallet holding testnet tokens.
+
 ## Current contracts
 
 ### `DeploymentProbe`
