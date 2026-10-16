@@ -1,0 +1,46 @@
+name: Deploy Puyomu to Portaldot V3 Testnet
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+jobs:
+  deploy-testnet:
+    runs-on: ubuntu-latest
+    env:
+      PRIVATE_KEY: ${{ secrets.PORTALDOT_TESTNET_PRIVATE_KEY }}
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Install dependencies
+        run: npm install
+      - name: Compile contracts
+        run: npm run compile
+      - name: Run contract tests
+        run: npm test
+      - name: Require a dedicated testnet key
+        shell: bash
+        run: |
+          if [ -z "$PRIVATE_KEY" ]; then
+            echo "::error::Add the PORTALDOT_TESTNET_PRIVATE_KEY repository secret before running this workflow."
+            exit 1
+          fi
+      - name: Verify RPC and deploy contracts
+        run: npm run deploy:v3
+      - name: Commit public deployment evidence
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add deployments/portaldotV3.json
+          if ! git diff --cached --quiet; then
+            git commit -m "deploy: record Portaldot V3 testnet addresses"
+            git push origin HEAD:main
+          else
+            echo "Deployment record unchanged; no commit needed."
+          fi
