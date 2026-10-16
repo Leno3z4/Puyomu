@@ -1,0 +1,29 @@
+name: Portaldot V3 RPC Check
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "scripts/checkNetwork.ts"
+      - "hardhat.config.ts"
+      - "package.json"
+      - ".github/workflows/portaldot-network-check.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  check-rpc:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Install dependencies
+        run: npm install
+      - name: Verify Portaldot V3 RPC
+        run: npm run check:v3
