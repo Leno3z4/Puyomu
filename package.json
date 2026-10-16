@@ -6,6 +6,7 @@
   "scripts": {
     "compile": "hardhat compile",
     "test": "hardhat test",
+    "check:v3": "hardhat run scripts/checkNetwork.ts --network portaldotV3",
     "deploy:v3": "hardhat run scripts/deploy.ts --network portaldotV3"
   },
   "devDependencies": {
