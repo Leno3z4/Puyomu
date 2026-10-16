@@ -1,0 +1,19 @@
+{
+  "name": "puyomu",
+  "version": "0.1.0",
+  "private": true,
+  "description": "A Portaldot V3 perpetual protocol with programmable protection and DaaS-oriented recovery.",
+  "scripts": {
+    "compile": "hardhat compile",
+    "test": "hardhat test",
+    "deploy:v3": "hardhat run scripts/deploy.ts --network portaldotV3"
+  },
+  "devDependencies": {
+    "@nomicfoundation/hardhat-toolbox": "^5.0.0",
+    "@types/node": "^22.10.2",
+    "dotenv": "^16.4.7",
+    "hardhat": "^2.22.17",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.7.2"
+  }
+}
